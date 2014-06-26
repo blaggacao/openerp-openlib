@@ -8,7 +8,7 @@ OpenLib ORM Extension
 Introduction
 ------------
 
-To use the OpenLib ORM Extension, you must import ExtendedOsv and Q classes: ::
+To use the OpenLib ORM Extension, you have to import ExtendedOsv and Q classes: ::
 
     from openlib.orm import ExtendedOsv, Q
 
@@ -17,24 +17,24 @@ If you want your objects to natively support the extension, make them inherit fr
     class MyObject(osv.osv, ExtendedOsv):
         ...
 
-Because OpenERP native objects does not inherit from :class:`ExtendedOsv`, you can't directly call the new methods
-on these objects pools. You will have to pass throught an object which inherits from :class:`ExtendedOsv`.
+Because OpenERP native objects don't inherit from :class:`ExtendedOsv`, you can't directly call the new methods
+on these object pools. You will have to pass throught an object which inherits from :class:`ExtendedOsv`.
 
 The ExtendedOsv class
 ---------------------
 
 .. class:: ExtendedOsv
 
-Every object which inherit from this class can use the following methods. These methods support a
-:ref:`django-like style <keywords-format>` and doesn't require you to pass them  ``cr``, ``uid`` or ``context``
+Every object which inherits from this class can use the following methods. These methods support a
+:ref:`django-like style <keywords-format>` and don't require you to pass ``cr``, ``uid`` or ``context``
 variables. These variables are recovered from the *execution stack*. This means that you **must** have variables named
 *cr*, *uid*, and *context* (optional) when you call these methods. Generally, these variables are passed by OpenERP.
 
 .. note::
 
-    All the methods described below supports ``_cr``, ``_uid`` and ``_context`` arguments to override the ones found
-    automatically in the python stack. We use *_* at the begin of arguments for methods which support
-    :ref:`django-like searching <keywords-format>` by arguments to avoid conflicts.
+    All the methods described below support ``_cr``, ``_uid`` and ``_context`` arguments to override the ones found
+    in the python stack. To avoide conflicts, we use *_* at the beginning of arguments for methods which support
+    :ref:`django-like searching by arguments<keywords-format>`.
 
 find
 ~~~~
@@ -62,7 +62,7 @@ Find partners with name='Agrolait' or 'AsusTek': ::
 
     partners_ids = self.find(Q(name='Agrolait') | Q(name='AsusTek'), _object='res.partners')
 
-In the case you are using :meth:`find` on an object which inherit :class:`ExtendedOsv`, you can omit the *_object*
+In the case you are using :meth:`find` on an object which inherits :class:`ExtendedOsv`, you can omit the *_object*
 argument: ::
 
     objects_ids = self.find(name='OK')
@@ -83,17 +83,17 @@ If you specify a list of ids, :meth:`find` is not called. The corresponding obje
 
 **Examples**
 
-Iterate over partners whose name starts with 'A': ::
+Iterate over partners whose names start with 'A': ::
 
     for partner in self.filter(name__startswith='A', _object='res.partner'):
         ...
 
-Almost same with a :class:`Q` object: ::
+Partners, that start with 'A' or 'B' as a :class:`Q` object: ::
 
     for partner in self.filter(Q(name__startswith='A') | Q(name__startswith='B'), _object='res.partner'):
         ...
 
-Iterate over a list of ids of one of our objects: ::
+Iterate over a list of ids: ::
 
     for obj in self.filter([1, 2, 3]):
         ...
@@ -135,7 +135,7 @@ get_pools
 
     An equivalent of ``sel.pool.get`` which supports more than one argument.
 
-    :returns: A list of pool objects for each pool name passed as argument.
+    :returns: A list of pool objects for each pool name that is passed as an argument.
 
 **Example**
 
@@ -149,18 +149,18 @@ xmlid_to_id
 
 .. method:: ExtendedOsv.xmlid_to_id(cr, uid, xmlid, context=None)
 
-    This method returns the database ID corresponding the ``xmlid`` passed, or ``None``.
+    This method returns the database ID corresponding to the passed ``xmlid``, or ``None``.
 
     .. note::
 
-        This method does not uses automatic detection of ``cr``, ``uid`` and ``context``.
+        This method doesn't use automatic detection of ``cr``, ``uid`` and ``context``.
 
 Query Objects
 -------------
 
 .. class:: Q
 
-This class let you create complex search query easily. It uses :ref:`django-like keyword arguments <keywords-format>` to define search criteria.
+This class lets you create complex search query easily. It uses :ref:`django-like keyword arguments <keywords-format>` to define search criteria.
 These objects can be combined with ``&`` or ``|`` and prefixed with ``-`` to negate them : ::
 
     criteria = Q(name='Peter', age=12) | Q(name='Paul')
@@ -184,8 +184,8 @@ For a detailed description the keywords arguments, read :ref:`keywords-format`.
 Keywords arguments format
 -------------------------
 
-With OpenLib, :class:`Q` objects and :class:`ExtendedOsv` class methods supports keyword argument formatting to specify
-you search criteria. The simple form of the keyword argument is : ::
+With OpenLib, :class:`Q` objects and :class:`ExtendedOsv` class methods support keyword argument formatting to specify
+your search criteria. The simple form of the keyword argument is : ::
 
     name='value'
 
@@ -213,7 +213,7 @@ The column name can be separated with '__' to represent a relation: ::
     
 .. warning::
 
-    If you have a column which have the same name that a lookup method, you must repeat it (xxx__exact__exact).
+    If you have a column which ends the same as a lookup method, you must repeat it (xxx__exact__exact).
 
 Examples
 ~~~~~~~~
